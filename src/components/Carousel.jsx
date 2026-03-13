@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Left, Right } from "@bigbinary/neeto-icons";
 import { Button } from "@bigbinary/neetoui";
@@ -20,6 +20,16 @@ const Carousel = ({ productName, imageUrls }) => {
       setIndex(prevIndex => prevIndex - 1);
     }
   };
+
+  const timer = useRef(null);
+
+  useEffect(() => {
+    timer.current = setInterval(handleNext, 3000);
+
+    return () => {
+      clearInterval(timer.current);
+    };
+  }, [index]);
 
   return (
     <div className="flex items-center">
